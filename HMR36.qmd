@@ -1,11 +1,11 @@
 ---
-title: "HMR 36 Calculation"
+title: "Lopez Basin - HMR 36 Calculation"
 author: "Dan McGraw"
 format: html
 editor: visual
 ---
 
-The procedures in Hydrometeorological Report No. 36 (MHR 36) were used to estimate the PMP for Lopez Dam. The calculation was done in R and is recreated in this section. The index maps in the HMR 36 PDF are small and corresponding GIS files could not be found at this time.
+The procedures in Hydrometeorological Report No. 36 (MHR 36) were used to estimate the PMP for Lopez Dam. The calculation was done in R and is recreated in this section. The index maps in the HMR 36 PDF are scanned pages. Additionally, corresponding GIS files could not be found at this time.
 
 ```{r}
 #| warning: false
