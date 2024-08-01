@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-The procedures in Hydrometeorological Report No. 36 (MHR 36) were used to estimate the PMP for Lopez Dam. The calculation was done in R and is recreated in this section. The index maps in the HMR 36 PDF are scanned pages. Additionally, corresponding GIS files could not be found at this time.
+The procedures in Hydrometeorological Report No. 36 (MHR 36) were used to estimate the PMP for Lopez Dam. The calculation was done in R and is recreated in this section. The index maps in the HMR 36 PDF are scanned pages. Additionally, HMR 36 GIS files could not be found. The sections below are numbered to match the corresponding section in HMR 36.
 
 ```{r}
 #| warning: false
@@ -16,7 +16,7 @@ library(quarto)
 source("E:/R/theme_USACE.r")
 ```
 
-## Section 9.02 - Determine Orographic PMP Development
+## Section 9.02 - Orographic PMP Development
 
 The calculations in this section were conducted following the instructions laid out in HMR 36 - Section 9.02, steps in determining orographic PMP
 
@@ -88,11 +88,11 @@ oro_pmp$Mar_P_cu <- cumsum(oro_pmp$Mar_P_in)
 oro_pmp$Apr_P_cu <- cumsum(oro_pmp$Apr_P_in)
 ```
 
-## Section 9.03 - Determine Convergence PMP
+## Section 9.03 - Convergence PMP
 
 The calculations in this section were conducted following the instructions laid out in HMR 36 - Section 9.03, steps in determining restricted convergence PMP to be combined with orographic PMP.
 
-1.  Determine average probable maximum convergence precipitation index withinbasin outline from figure 4-12 (grid average is adequate).
+1.  Determine average probable maximum convergence precipitation index within basin outline from figure 4-12 (grid average is adequate).
 
 ```{r}
 cpmpindex <- 3.8
