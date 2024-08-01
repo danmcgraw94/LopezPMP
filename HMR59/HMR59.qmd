@@ -1,0 +1,89 @@
+---
+title: "Lopez Basin - HMR 59 Calculation"
+author: "Dan McGraw"
+format: html
+editor: visual
+---
+
+The procedures in Hydrometeorological Report No. 59 (MHR 59) were used to estimate the PMP for Lopez Dam. 
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(kableExtra)
+library(knitr)
+library(quarto)
+source("E:/R/theme_USACE.r")
+```
+
+## All Season PMP
+
+The all season PMP was estimated using the the Modeling, Mapping, and Consequences (MMC) Center GIS PMP tool. The PMP value was calculated by placing 232 sample points spaced evenly within the basin at 2,000 meters apart. Analysis in the MMC tool is based on 2 km x 2 km grid resolution.
+
+The 10 sq. mile, 24-hour PMP estimate was 32.48 inches. Seasonal PMP is optional in HMR-59. Use of this option implies some knowledge of seasonal snowmelt that will be combined with seasonal PMP estimates. Seasonal PMP was not considered for this analysis.
+
+
+```{r all season}
+hmr_allseasonPMP <- 32.48
+```
+
+## Depth-Duration Relations
+
+The depth-duration ratios for 10 sq. mile rainfall depth are used to obtain PMP depths at durations other than 24-hours. These values are from Table 13.1, corresponding to the Southwest Region
+
+```{r depth-duration ratio}
+w_dur_ratios <- c(0,0.14,0.48,0.76,1.0,1.41,1.59)
+```
+
+The all-season PMP at all durations was calculated below.
+
+```{r all duration PMP}
+dur_pmp <- hmr_allseasonPMP * w_dur_ratios
+```
+
+## Areal Reduction Factors
+The areal reduction factors were obtained from table 13.3. Lopez Basin is 33.1 square miles and contained entirely within the Southwest region. 
+
+```{r areal reduction factors}
+hmr59_arfs <- (c(0,90.82,91.40,92.13,92.87,93.81,94.56))/100
+```
+
+## HMR 59 PMP
+The all-season PMP values are calculated as such
+
+```{r}
+hmr59P <- round(dur_pmp * hmr59_arfs,2)
+
+# Create Data Frame
+hmr59 <- data.frame(Duration.hrs = c(0,1,6,12,24,48,72),
+                    Rainfall.In = hmr59P)
+```
+
+```{r}
+#| echo: false
+kable(hmr59,
+      caption = "HMR 59 PMP",
+      align = c("c", "c"),
+      col.names = c("Duration (hrs)", "Rainfall (In.)"))
+```
+
+<!-- The resulting hyetograph is shown in @fig-HMR36-Hyetograph -->
+
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| warning: false -->
+<!-- #| label: fig-HMR36-Hyetograph -->
+<!-- #| fig-cap: "HMR 36" -->
+<!-- #| fig-cap-location: "bottom" -->
+<!-- #| fig-align: "center" -->
+<!-- #| fig-responsive: true -->
+
+<!-- ggplot(hmr36_temporal,aes(x=Duration.hrs,y=Hyetograph))+ -->
+<!--   geom_line(color = "black") + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_area(fill = "lightblue", alpha = 0.3) + -->
+<!--   labs(x = "Duration (hrs)", y = "Depth (inches)")+ -->
+<!--   scale_x_continuous(breaks = seq(0,78,6))+ -->
+<!--   scale_y_continuous(breaks = seq(0,8,1),minor_breaks = seq(0,8,0.25))+ -->
+<!--   theme_USACE() -->
+<!-- ``` -->
